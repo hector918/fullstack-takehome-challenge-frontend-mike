@@ -21,13 +21,16 @@ export default function NewRaffleForm() {
       return result;
     }
   }
+  const onCreateNewRaffleClick = evt => {
+    console.log(evt.target)
+  }
   //////////////////////////////////////////
   return <div>
     <form onSubmit={e => e.preventDefault()}>
       <div className="field">
         <label className="label">Name</label>
         <div className="control">
-          <input className="input" type="text" placeholder="e.g Alex Smith" />
+          <input className="input" type="text" placeholder="e.g Lottery" />
         </div>
       </div>
 
@@ -35,15 +38,23 @@ export default function NewRaffleForm() {
         <label className="label">Secret token</label>
         <div className="field has-addons">
           <div className="control is-expanded">
-            <input className="input" ref={secretTokenInput} type="text" placeholder="Generate secret token" />
+            <input className="input" ref={secretTokenInput} type="text" placeholder="J8mkXQ" />
           </div>
           <div className="control">
             <button className="button is-info" onClick={onGenerateClick}>
-              Search
+              Generate secret token
             </button>
+
           </div>
         </div>
+        <p className="help">You must remember the Raffle secret token because it will be asked when picking a winner.</p>
+
       </div>
-    </form>
-  </div>
+      <div className="field">
+        <div className="control is-expanded">
+          <button className="button" style={{ width: "100%" }} onClick={onCreateNewRaffleClick}> Create New Raffle</button>
+        </div>
+      </div>
+    </form >
+  </div >
 }

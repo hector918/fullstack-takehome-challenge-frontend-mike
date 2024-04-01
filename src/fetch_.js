@@ -1,4 +1,5 @@
 var API = process.env.REACT_APP_API_URL === "." ? `${window.location.origin}` : process.env.REACT_APP_API_URL;
+console.log(API)
 let default_fetch_options = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "application/json",
@@ -54,3 +55,9 @@ function fetch_get(url, callback) {
     });
 }
 /////////////////////////////////////////////////
+const getAllRaffles = (callback) => {
+  fetch_get(`${API}/api/raffles`, callback);
+}
+/////////////////////////////////////////////////
+const exp = { getAllRaffles };
+export default exp;
