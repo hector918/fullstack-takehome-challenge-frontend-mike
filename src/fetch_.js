@@ -58,6 +58,13 @@ function fetch_get(url, callback) {
 const getAllRaffles = (callback) => {
   fetch_get(`${API}/api/raffles`, callback);
 }
+const createNewRaffle = (newRaffleData, callback) => {
+  const body = { body: JSON.stringify(newRaffleData) };
+  fetch_post(`${API}/api/raffles`, body, callback);
+}
 /////////////////////////////////////////////////
-const exp = { getAllRaffles };
+const exp = {
+  getAllRaffles,
+  createNewRaffle
+};
 export default exp;

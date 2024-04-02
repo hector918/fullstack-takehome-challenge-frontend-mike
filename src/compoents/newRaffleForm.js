@@ -1,7 +1,8 @@
 import { useRef } from "react";
+import srv from '../fetch_.js';
 
 ////////////////////////////////////////////////
-export default function NewRaffleForm() {
+export default function NewRaffleForm({ updateAllRaffles }) {
   const secretTokenInput = useRef(null);
   const formHandle = useRef(null);
   //event////////////////////////////////////////
@@ -21,8 +22,26 @@ export default function NewRaffleForm() {
     }
   }
   const onCreateNewRaffleClick = evt => {
+    const allInputs = formHandle.current.querySelectorAll("input");
+    const newRaffleData = {};
+    const createFormHelper = formHandle.current.querySelector(".create_raffle_helper_p");
+    for (let itm of allInputs) newRaffleData[itm.name] = itm.value;
+    resetHelper();
+    srv.createNewRaffle(newRaffleData, resp => {
+      if (resp.error) {
+        createFormHelper.classList.add("is-danger");
+        createFormHelper.innerHTML = `Error: ${resp.error}`;
 
-    console.log(evt.target, formHandle.current)
+      } else {
+        createFormHelper.classList.add("is-success");
+        createFormHelper.innerHTML = `Success: Raffle created.`;
+        updateAllRaffles(pv => !pv);
+      }
+    })
+    function resetHelper() {
+      createFormHelper.classList.remove("is-danger", "is-success");
+      createFormHelper.innerHTML = "ready to go.";
+    }
   }
   //////////////////////////////////////////
   return <div>
@@ -54,6 +73,7 @@ export default function NewRaffleForm() {
         <div className="control is-expanded">
           <button className="button" style={{ width: "100%" }} onClick={onCreateNewRaffleClick}> Create New Raffle</button>
         </div>
+        <p className="help create_raffle_helper_p"></p>
       </div>
     </form >
   </div >

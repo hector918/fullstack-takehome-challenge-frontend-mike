@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import srv from '../fetch_.js';
 import Raffle from './raffle.js';
 ///////////////////////////////////////////////
-export default function AllRafflesComponent() {
+export default function AllRafflesComponent({ updateCompoent }) {
   const [isError, setIsError] = useState("");
   const [isLoading, setIsloading] = useState(true);
   const [allRaffles, setAllRaffles] = useState([]);
@@ -18,7 +18,7 @@ export default function AllRafflesComponent() {
       }
       setIsloading(false);
     })
-  }, []);
+  }, [updateCompoent]);
   ///////////////////////////////////
   function raffleOnClick(evt) {
     console.log(evt);
