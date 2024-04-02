@@ -3,8 +3,7 @@ import { useRef } from "react";
 ////////////////////////////////////////////////
 export default function NewRaffleForm() {
   const secretTokenInput = useRef(null);
-
-
+  const formHandle = useRef(null);
   //event////////////////////////////////////////
   const onGenerateClick = () => {
     if (secretTokenInput.current) {
@@ -22,15 +21,16 @@ export default function NewRaffleForm() {
     }
   }
   const onCreateNewRaffleClick = evt => {
-    console.log(evt.target)
+
+    console.log(evt.target, formHandle.current)
   }
   //////////////////////////////////////////
   return <div>
-    <form onSubmit={e => e.preventDefault()}>
+    <form ref={formHandle} onSubmit={e => e.preventDefault()}>
       <div className="field">
         <label className="label">Name</label>
         <div className="control">
-          <input className="input" type="text" placeholder="e.g Lottery" />
+          <input className="input" name="name" type="text" placeholder="e.g Lottery" />
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export default function NewRaffleForm() {
         <label className="label">Secret token</label>
         <div className="field has-addons">
           <div className="control is-expanded">
-            <input className="input" ref={secretTokenInput} type="text" placeholder="J8mkXQ" />
+            <input className="input" name="secret_token" ref={secretTokenInput} type="text" placeholder="J8mkXQ" />
           </div>
           <div className="control">
             <button className="button is-info" onClick={onGenerateClick}>
