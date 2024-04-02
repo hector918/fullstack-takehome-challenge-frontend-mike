@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import srv from '../fetch_.js';
 import Raffle from './raffle.js';
 ///////////////////////////////////////////////
@@ -6,6 +7,7 @@ export default function AllRafflesComponent({ updateCompoent }) {
   const [isError, setIsError] = useState("");
   const [isLoading, setIsloading] = useState(true);
   const [allRaffles, setAllRaffles] = useState([]);
+  const navigate = useNavigate();
   ///////////////////////////////////
   useEffect(() => {
     setIsloading(true);
@@ -20,8 +22,8 @@ export default function AllRafflesComponent({ updateCompoent }) {
     })
   }, [updateCompoent]);
   ///////////////////////////////////
-  function raffleOnClick(evt) {
-    console.log(evt);
+  function raffleOnClick(raffleId) {
+    navigate("/raffles/" + raffleId);
   }
   ///////////////////////////////////
   function render() {

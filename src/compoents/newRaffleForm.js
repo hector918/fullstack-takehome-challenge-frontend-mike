@@ -45,6 +45,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
   }
   //////////////////////////////////////////
   return <div>
+    <p className="subtitle">New Raffle</p>
     <form ref={formHandle} onSubmit={e => e.preventDefault()}>
       <div className="field">
         <label className="label">Name</label>

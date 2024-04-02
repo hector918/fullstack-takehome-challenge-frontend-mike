@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import HomePage from './pages/homePage';
+import RaffleDetailPage from "./pages/raffleDetailPage";
 
 function App() {
   return (
@@ -11,6 +12,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/raffles/:id" element={<RaffleDetailPage />} />
+
           </Routes>
         </Router>
       </div>
