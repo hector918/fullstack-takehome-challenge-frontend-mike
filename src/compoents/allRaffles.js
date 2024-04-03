@@ -22,8 +22,8 @@ export default function AllRafflesComponent({ updateCompoent }) {
     })
   }, [updateCompoent]);
   ///////////////////////////////////
-  function raffleOnClick(raffleId) {
-    navigate("/raffles/" + raffleId);
+  function raffleOnClick(raffle) {
+    navigate("/raffles/" + raffle.id, { raffle });
   }
   ///////////////////////////////////
   function render() {

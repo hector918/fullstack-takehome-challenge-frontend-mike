@@ -1,5 +1,5 @@
 export default function Raffle({ raffle, clickHandler }) {
-  return <div className="content box is-clickable" onClick={() => clickHandler(raffle.id)}>
+  return <div className="content box is-clickable" onClick={() => clickHandler(raffle)}>
     <h3>{raffle.name}</h3>
     <p><span>Created on: </span>{(new Date(raffle.create_at)).toUTCString()}</p>
     <p><span>Winner Id: </span>{raffle.winner_id}</p>

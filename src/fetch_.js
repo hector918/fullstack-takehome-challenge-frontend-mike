@@ -62,9 +62,16 @@ const createNewRaffle = (newRaffleData, callback) => {
   const body = { body: JSON.stringify(newRaffleData) };
   fetch_post(`${API}/api/raffles`, body, callback);
 }
+
+const getRaffleById = (id, callback) => {
+
+  fetch_get(`${API}/api/raffles/${id}`, callback);
+
+}
 /////////////////////////////////////////////////
 const exp = {
   getAllRaffles,
-  createNewRaffle
+  createNewRaffle,
+  getRaffleById
 };
 export default exp;
