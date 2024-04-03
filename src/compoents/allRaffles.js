@@ -23,7 +23,7 @@ export default function AllRafflesComponent({ updateCompoent }) {
   }, [updateCompoent]);
   ///////////////////////////////////
   function raffleOnClick(raffle) {
-    navigate("/raffles/" + raffle.id, { raffle });
+    navigate("/raffles/" + raffle.id);
   }
   ///////////////////////////////////
   function render() {
