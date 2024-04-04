@@ -81,7 +81,7 @@ export default function RaffleDetailPage() {
             <ul onClick={tabsOnClick}>
               <li><a href="#top" targetname="allRaffles">All Raffles</a></li>
               {raffle.id === undefined ? <div>Error not raffle found.</div> : <>
-                <li><a href="#top" targetname="register">Register</a></li>
+                {raffle.status === 0 && <li><a href="#top" targetname="register">Register</a></li>}
                 <li><a href="#top" targetname="participants">Participants</a></li>
                 {raffle.status === 0 ?
                   <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>

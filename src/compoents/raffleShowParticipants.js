@@ -47,7 +47,7 @@ export default function RaffleShowParticipants({ raffle }) {
   }
   /////////////////////////////////////////////
   return <div>
-    <p className='title is-3'>Participants: {"0"} total</p>
+    <p className='title is-3'>Participants: {participants.length} total.</p>
     <div className='section'>
       <div><div className="field has-addons">
         <div className="control  is-expanded">
