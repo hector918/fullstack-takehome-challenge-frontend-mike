@@ -1,15 +1,13 @@
-import { useRef } from "react";
+import { useState } from "react";
 import srv from '../fetch_.js';
 
 ////////////////////////////////////////////////
 export default function NewRaffleForm({ updateAllRaffles }) {
-  const secretTokenInput = useRef(null);
-  const formHandle = useRef(null);
+  const [secretToken, setSecretToken] = useState("");
   //event////////////////////////////////////////
   const onGenerateClick = () => {
-    if (secretTokenInput.current) {
-      secretTokenInput.current.value = create_secret_token();
-    }
+    setSecretToken(create_secret_token());
+
     //////////////////////////////////////
     function create_secret_token(length = 6) {
       var result = '';
@@ -22,9 +20,9 @@ export default function NewRaffleForm({ updateAllRaffles }) {
     }
   }
   const onCreateNewRaffleClick = evt => {
-    const allInputs = formHandle.current.querySelectorAll("input");
+    const allInputs = evt.target.querySelectorAll("input");
     const newRaffleData = {};
-    const createFormHelper = formHandle.current.querySelector(".create_raffle_helper_p");
+    const createFormHelper = evt.target.querySelector(".create_raffle_helper_p");
     for (let itm of allInputs) newRaffleData[itm.name] = itm.value;
     resetHelper();
     srv.createNewRaffle(newRaffleData, resp => {
@@ -46,7 +44,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
   //////////////////////////////////////////
   return <div>
     <p className="subtitle">New Raffle</p>
-    <form ref={formHandle} onSubmit={e => e.preventDefault()}>
+    <form onSubmit={e => e.preventDefault()}>
       <div className="field">
         <label className="label">Name</label>
         <div className="control">
@@ -58,7 +56,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
         <label className="label">Secret token</label>
         <div className="field has-addons">
           <div className="control is-expanded">
-            <input className="input" name="secret_token" ref={secretTokenInput} type="text" placeholder="J8mkXQ" />
+            <input className="input" name="secret_token" type="text" placeholder="J8mkXQ" value={secretToken} onChange={e => setSecretToken(e.target.value)} />
           </div>
           <div className="control">
             <button className="button is-info" onClick={onGenerateClick}>

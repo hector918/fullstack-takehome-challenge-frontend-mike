@@ -9,7 +9,7 @@ export default function RaffleRegisterParticipants({ raffle }) {
     pHelper.current.innerHTML = '<div><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></div>';
     pHelper.current.classList.remove("is-danger", "is-success");
 
-    const inputs = formHandle.current.querySelectorAll("input");
+    const inputs = evt.target.querySelectorAll("input");
     const participant = {};
     inputs.forEach(el => participant[el.getAttribute("name")] = el.value);
     srv.raffleRegisterParticipant(raffle.id, participant, resp => {
