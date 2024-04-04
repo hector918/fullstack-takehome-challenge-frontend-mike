@@ -12,7 +12,7 @@ export default function AllRafflesComponent({ updateCompoent }) {
   useEffect(() => {
     setIsloading(true);
     srv.getAllRaffles(resp => {
-      console.log(resp)
+
       if (resp.error) {
         setIsError(resp.error);
       } else {
