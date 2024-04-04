@@ -64,14 +64,23 @@ const createNewRaffle = (newRaffleData, callback) => {
 }
 
 const getRaffleById = (id, callback) => {
-
   fetch_get(`${API}/api/raffles/${id}`, callback);
+}
 
+const raffleRegisterParticipant = (id, participant, callback) => {
+  const body = { body: JSON.stringify(participant) };
+  fetch_post(`${API}/api/raffles/${id}/participants`, body, callback);
+}
+
+const getRaffleParticipants = (id, callback) => {
+  fetch_get(`${API}/api/raffles/${id}/participants`, callback);
 }
 /////////////////////////////////////////////////
 const exp = {
   getAllRaffles,
   createNewRaffle,
-  getRaffleById
+  getRaffleById,
+  raffleRegisterParticipant,
+  getRaffleParticipants
 };
 export default exp;

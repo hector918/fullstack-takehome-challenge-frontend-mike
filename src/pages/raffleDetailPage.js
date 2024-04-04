@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import RaffleRegisterParticipants from "../compoents/raffleRegisterParticipants.js";
 import RaffleShowParticipants from "../compoents/raffleShowParticipants.js";
 import RafflePickWinner from "../compoents/rafflePickWinner.js";
-
 ///////////////////////////////////////////////
 export default function RaffleDetailPage() {
   const navigate = useNavigate();
@@ -13,16 +12,18 @@ export default function RaffleDetailPage() {
   const [isError, setIsError] = useState("");
   const [isLoading, setIsloading] = useState(true);
   const [raffle, setRaffle] = useState({});
-  const [tab, setTab] = useState(<RaffleRegisterParticipants />);
+  const [tab, setTab] = useState(<div></div>);
   //////////////////////////////////////////////
   useEffect(() => {
     setIsloading(true);
     srv.getRaffleById(id, resp => {
-      console.log(resp)
+
       if (resp.error) {
         setIsError(resp.error);
+        setRaffle({});
       } else {
         setRaffle(resp.data);
+        setTab(<RaffleRegisterParticipants raffle={resp.data} />);
       }
       setIsloading(false);
     })
@@ -30,29 +31,27 @@ export default function RaffleDetailPage() {
   //////////////////////////////////////////////
   const tabsOnClick = evt => {
     const tabs = evt.currentTarget;
-
     tabs.childNodes.forEach(el => el.classList.remove("is-active"));
     const target = evt.target.getAttribute("targetname");
     evt.target.parentNode.classList.add("is-active");
     switch (target) {
       case "allRaffles":
         navigate("/");
-
         break;
       case "participants":
-        setTab(<RaffleShowParticipants />);
+        setTab(<RaffleShowParticipants raffle={raffle} />);
         break;
       case "pickWinner":
-        setTab(<RafflePickWinner />);
+        setTab(<RafflePickWinner raffle={raffle} />);
         break;
       default:
-        setTab(<RaffleRegisterParticipants />);
+        setTab(<RaffleRegisterParticipants raffle={raffle} />);
     }
   }
   //////////////////////////////////////////////
   function render(raffle) {
     if (isError !== "") {
-      return <div></div>
+      return <div>Error: {isError}</div>
     } else {
       if (isLoading) {
         return <div style={{ textAlign: "center" }}>
@@ -72,15 +71,17 @@ export default function RaffleDetailPage() {
           <div id="top" className="tabs is-centered is-fullwidth">
             <ul onClick={tabsOnClick}>
               <li><a href="#top" targetname="allRaffles">All Raffles</a></li>
-              <li className="is-active"><a href="#top" targetname="register">Register</a></li>
-              <li><a href="#top" targetname="participants">Participants</a></li>
-              <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>
+              {raffle.id === undefined ? <div>Error not raffle found.</div> : <>
+                <li className="is-active"><a href="#top" targetname="register">Register</a></li>
+                <li><a href="#top" targetname="participants">Participants</a></li>
+                <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>
+              </>
+              }
             </ul>
           </div>
 
           <div>
             {tab}
-
           </div>
         </div>
       }

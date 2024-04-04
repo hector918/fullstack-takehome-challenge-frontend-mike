@@ -1,14 +1,33 @@
 import { useRef } from "react"
-
-export default function RaffleRegisterParticipants() {
+import srv from '../fetch_.js';
+///////////////////////////////////////////
+export default function RaffleRegisterParticipants({ raffle }) {
   const formHandle = useRef(null);
+  const pHelper = useRef(null);
   ///////////////////////////////////////////
   const onSubmitClick = evt => {
+    pHelper.current.innerHTML = '<div><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></div>';
+    pHelper.current.classList.remove("is-danger", "is-success");
+
     const inputs = formHandle.current.querySelectorAll("input");
-    console.log(inputs);
+    const participant = {};
+    inputs.forEach(el => participant[el.getAttribute("name")] = el.value);
+    srv.raffleRegisterParticipant(raffle.id, participant, resp => {
+      if (resp.error) {
+        pHelper.current.classList.add("is-danger");
+        pHelper.current.innerHTML = `Error: ${resp.error}`;
+      } else {
+        pHelper.current.classList.add("is-success");
+        pHelper.current.innerHTML = `Participant ${resp.data.email} added.`;
+        inputs.forEach(el => el.value = "");
+      }
+    })
   }
   const onResetClick = evt => {
-
+    if (window.confirm("click Yes to reset the form.")) {
+      const inputs = formHandle.current.querySelectorAll("input");
+      inputs.forEach(el => el.value = "");
+    }
   }
   ///////////////////////////////////////////
   return <div>
@@ -18,27 +37,30 @@ export default function RaffleRegisterParticipants() {
         <div className="field">
           <label className="label">First Name *</label>
           <div className="control">
-            <input className="input" name="name" type="text" placeholder="first name" />
+            <input className="input" name="firstname" type="text" placeholder="first name" />
           </div>
         </div>
         <div className="field">
           <label className="label">Last Name *</label>
           <div className="control">
-            <input className="input" name="name" type="text" placeholder="last name" />
+            <input className="input" name="lastname" type="text" placeholder="last name" />
           </div>
         </div>
         <div className="field">
           <label className="label">Email *</label>
           <div className="control">
-            <input className="input" name="name" type="text" placeholder="email" />
+            <input className="input" name="email" type="text" placeholder="email" />
           </div>
         </div>
         <div className="field">
           <label className="label">Phone</label>
           <div className="control">
-            <input className="input" name="name" type="text" placeholder="phone" />
+            <input className="input" name="phone" type="text" placeholder="phone number" />
           </div>
         </div>
+
+        <div><p ref={pHelper} className="help"></p></div>
+
         <div className="is-flex is-justify-content-center">
           <div className="field has-addons">
             <p className="control">
