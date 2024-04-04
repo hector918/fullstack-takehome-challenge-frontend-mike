@@ -9,7 +9,7 @@ export default function HomePage() {
   return <div className="container">
 
     <AppTitle />
-    <div className="is-flex"><h4 className="is-size-5">Home page</h4></div>
+    <div className="is-flex mx-1"><h4 className="is-size-5">Home page</h4></div>
     <div className="section"><NewRaffleForm updateAllRaffles={setUpdateCompoent} /></div>
     <div className="section"><AllRafflesComponent updateCompoent={updateCompoent} /></div>
   </div>
