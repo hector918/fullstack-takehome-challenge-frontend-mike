@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+[![Pursuit Logo](https://avatars1.githubusercontent.com/u/5825944?s=200&v=4)](https://pursuit.org)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Raffle-Takehome-Coding-Challenge
 
-## Available Scripts
+Coding challenge where you build a Raffle App including a RestAPI and connected Web Client (React)
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+1. Create separate GitHub repos for your **front end** and **back end**. You must submit **two separate repos** (not one).
+2. Create a new Node + Express app for your API
+3. Create a front end client using React.
+   - You may use `create-react-app` or any other starter app
+4. Complete all Technical Requirements listed below
+   a. Create an API with all routes listed below (this will require database tables, the database structure is up to you)
+   b. Create a Front-end that allows the user to view & create Raffles, as well as, select winners
+5. Each repo should have a README with complete instructions on how to set up and run the application locally. **Make sure your instructions work!**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technical Requirements
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Create a client for a Raffle application. Users are able to:
 
-### `npm test`
+- Create raffles
+- List all raffles
+- Add participants users to raffles
+- Draw a winner from a raffle, etc.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Notes**:
 
-### `npm run build`
+- You may use any 3rd-party libraries or packages for functionality or styling.
+  - We recommend you use something like Bootstrap or Material UI or others to style you app.
+  - Your app does not have to look fancy, but it must look **finished**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### API
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Use the details and endpoints of the API below to guide the development of your API. This API should accept and return JSON payloads.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- For `PUT` and `POST` endpoints, an example **request** body is given.
+- The server response should have a top-level key of `data` (for 200s) and `error` (for non-200s)
 
-### `npm run eject`
+Follow best practices for validation and error handling.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| Method | Endpoint                        | Description                                                | Example JSON Request Body Payload                                                                      |
+| ------ | ------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `GET`  | `/`                             | Health check                                               | n/a                                                                                                    |
+| `GET`  | `/api/raffles`                  | List all raffles                                           | n/a                                                                                                    |
+| `POST` | `/api/raffles`                  | Create a raffle                                            | `{ "name": "My first Raffle", "secret_token": "s3CrE7" }`                                              |
+| `GET`  | `/api/raffles/:id`              | Retrieve a raffle by id                                    | n/a                                                                                                    |
+| `GET`  | `/api/raffles/:id/participants` | Retrieve all participants of a raffle                      | n/a                                                                                                    |
+| `POST` | `/api/raffles/:id/participants` | Sign up a participant for a raffle                         | `{ "firstname": "Jane", "lastname": "Doe", "email": "jdoe@email.com", "phone": "+1 (917) 555-1234", }` |
+| `PUT`  | `/api/raffles/:id/winner`       | Pick a winner from the participants at random for a raffle | `{ "secret_token": "s3CrE7" }`                                                                         |
+| `GET`  | `/api/raffles/:id/winner`       | Retrieve the winner of a raffle                            |                                                                                                        |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Notes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- A `secret_token` must be provided when creating a raffle. This token can be any random string and will be used when picking a winner for the raffle. Only if the creation token matches the one in the PUT request to pick a winner the raffle will be performed and a winner will be awarded.
+- When adding a participant to a raffle all fields are required but `phone`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Wireframes
 
-## Learn More
+Your application doesn't have to look exactly as the wireframes below, however it should have all the main components, accomplish all the functionality and be visually pleasing.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Web Wireframes can be found [here](./Web-Raffle-App-Wireframes.pdf)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### App Pages/Views
 
-### Code Splitting
+As a guide for your work, you may use the wireframes above and follow the directions below to create your Front-end.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Home `/`
 
-### Analyzing the Bundle Size
+Display a form to add a new raffle with name and token fields and a submit button. Show a success message upon successful raffle creation and an error message otherwise.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Should also display a list of all raffles and when you click in one of the raffles of the list it should take the user to that raffle's page/view.
 
-### Making a Progressive Web App
+#### Single Raffle `/raffles/:id`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Displays a nav bar or navigation menu that would take the user to **All Raffles**, **Participants** and **Pick Winner** pages/views.
 
-### Advanced Configuration
+Below the navbar display a form to add a new participant to the Raffle. The form must include First Name, Last Name, Email and Phone inputs. The phone input should be optional and all others required. Include two buttons one to submit and another to reset the form.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Raffle Participants `/raffles/:id/participants`
 
-### Deployment
+Display the total number of participants and a list of all users and their information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Pick Winner `/raffles/:id/winner`
 
-### `npm run build` fails to minify
+Displays a form where a user (the raffle admin) can input their secret token and pick a winner at random for the raffle. If a winner has already been picked this page/view should display a card with the user information and a celebratory image and never show the form again.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Submission Guidelines
+
+- Submit the links to your front end and back end repos [in the Takehome tab of this spreadsheet](https://docs.google.com/spreadsheets/d/12TLdRWqWCKCtn5gSEn1YgMawqseIpw4kcO6EBG_9DWo/edit?usp=sharing)
+- You will have two weeks for this challenge.
+- You must submit your solution no later than **Sunday, April 7, 11:59 pm**
