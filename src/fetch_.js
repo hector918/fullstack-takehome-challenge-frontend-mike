@@ -1,4 +1,4 @@
-var API = process.env.REACT_APP_API_URL === "." ? `${window.location.origin}` : process.env.REACT_APP_API_URL;
+var API = process.env.REACT_APP_API_URL === undefined ? `${window.location.origin}` : process.env.REACT_APP_API_URL;
 console.log(API)
 let default_fetch_options = {
   "Access-Control-Allow-Origin": "*",
