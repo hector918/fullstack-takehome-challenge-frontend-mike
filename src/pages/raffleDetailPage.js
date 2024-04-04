@@ -100,8 +100,9 @@ export default function RaffleDetailPage() {
   }
   //////////////////////////////////////////////
   return <div className="container">
-    <div className="is-flex"><h1 className="is-size-3">raffle detail</h1></div>
     <AppTitle />
+    <div className="is-flex"><h4 className="is-size-5">raffle detail</h4></div>
+
     {render(raffle)}
   </div>
 }
