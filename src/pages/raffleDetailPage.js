@@ -12,23 +12,28 @@ export default function RaffleDetailPage() {
   const { id } = useParams();
   const [isError, setIsError] = useState("");
   const [isLoading, setIsloading] = useState(true);
+  const [triggerUpdate, setTriggerUpdate] = useState(true);
   const [raffle, setRaffle] = useState({});
   const [tab, setTab] = useState(<div></div>);
   //////////////////////////////////////////////
   useEffect(() => {
     setIsloading(true);
     srv.getRaffleById(id, resp => {
-      console.log(resp);
+
       if (resp.error) {
         setIsError(resp.error);
         setRaffle({});
       } else {
         setRaffle(resp.data);
-        setTab(<RaffleRegisterParticipants raffle={resp.data} />);
+        if (resp.data.status === 0) {
+          setTab(<RaffleRegisterParticipants raffle={resp.data} />);
+        } else if (resp.data.status === 1) {
+          setTab(<RaffleDisplayWinner raffle={resp.data} />);
+        }
       }
       setIsloading(false);
     })
-  }, [id]);
+  }, [id, triggerUpdate]);
   //////////////////////////////////////////////
   const tabsOnClick = evt => {
     const tabs = evt.currentTarget;
@@ -43,7 +48,7 @@ export default function RaffleDetailPage() {
         setTab(<RaffleShowParticipants raffle={raffle} />);
         break;
       case "pickWinner":
-        setTab(<RafflePickWinner raffle={raffle} />);
+        setTab(<RafflePickWinner raffle={raffle} setTriggerUpdate={setTriggerUpdate} />);
         break;
       case "displayWinner":
         setTab(<RaffleDisplayWinner raffle={raffle} />);
@@ -76,7 +81,7 @@ export default function RaffleDetailPage() {
             <ul onClick={tabsOnClick}>
               <li><a href="#top" targetname="allRaffles">All Raffles</a></li>
               {raffle.id === undefined ? <div>Error not raffle found.</div> : <>
-                <li className="is-active"><a href="#top" targetname="register">Register</a></li>
+                <li><a href="#top" targetname="register">Register</a></li>
                 <li><a href="#top" targetname="participants">Participants</a></li>
                 {raffle.status === 0 ?
                   <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>

@@ -7,7 +7,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
   //event////////////////////////////////////////
   const onGenerateClick = () => {
     setSecretToken(create_secret_token());
-
+    return false;
     //////////////////////////////////////
     function create_secret_token(length = 6) {
       var result = '';
@@ -19,10 +19,12 @@ export default function NewRaffleForm({ updateAllRaffles }) {
       return result;
     }
   }
-  const onCreateNewRaffleClick = evt => {
+  const submitCreateNewRaffle = evt => {
+    evt.preventDefault();
     const allInputs = evt.target.querySelectorAll("input");
     const newRaffleData = {};
     const createFormHelper = evt.target.querySelector(".create_raffle_helper_p");
+
     for (let itm of allInputs) newRaffleData[itm.name] = itm.value;
     resetHelper();
     srv.createNewRaffle(newRaffleData, resp => {
@@ -34,6 +36,10 @@ export default function NewRaffleForm({ updateAllRaffles }) {
         createFormHelper.classList.add("is-success");
         createFormHelper.innerHTML = `Success: Raffle created.`;
         updateAllRaffles(pv => !pv);
+        prompt("Last chance to save your secret token!", newRaffleData.secret_token);
+        for (let itm of allInputs) itm.value = "";
+        setSecretToken("");
+
       }
     })
     function resetHelper() {
@@ -44,7 +50,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
   //////////////////////////////////////////
   return <div>
     <p className="subtitle">New Raffle</p>
-    <form onSubmit={e => e.preventDefault()}>
+    <form onSubmit={submitCreateNewRaffle}>
       <div className="field">
         <label className="label">Name</label>
         <div className="control">
@@ -59,7 +65,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
             <input className="input" name="secret_token" type="text" placeholder="J8mkXQ" value={secretToken} onChange={e => setSecretToken(e.target.value)} />
           </div>
           <div className="control">
-            <button className="button is-info" onClick={onGenerateClick}>
+            <button className="button is-info" type="button" onClick={onGenerateClick}>
               Generate secret token
             </button>
 
@@ -70,7 +76,7 @@ export default function NewRaffleForm({ updateAllRaffles }) {
       </div>
       <div className="field">
         <div className="control is-expanded">
-          <button className="button" style={{ width: "100%" }} onClick={onCreateNewRaffleClick}> Create New Raffle</button>
+          <button className="button" type="submit" style={{ width: "100%" }}> Create New Raffle</button>
         </div>
         <p className="help create_raffle_helper_p"></p>
       </div>

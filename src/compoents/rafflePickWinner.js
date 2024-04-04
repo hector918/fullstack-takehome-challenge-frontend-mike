@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import srv from '../fetch_.js';
 ///////////////////////////////////////////////
-export default function RafflePickWinner({ raffle }) {
+export default function RafflePickWinner({ raffle, setTriggerUpdate }) {
   const [isError, setIsError] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [secretToken, setSecretToken] = useState("");
@@ -9,11 +9,11 @@ export default function RafflePickWinner({ raffle }) {
   const onPickAWinnerClick = evt => {
     setIsloading(true);
     srv.pickAWinner(raffle.id, secretToken, resp => {
-      console.log(resp);
+
       if (resp.error) {
         setIsError(resp.error);
       } else {
-
+        setTriggerUpdate(pv => !pv);
       }
       setIsloading(false);
     })

@@ -10,7 +10,6 @@ export default function RaffleDisplayWinner({ raffle }) {
   useEffect(() => {
     setIsloading(true);
     srv.getRaffleWinner(raffle.id, resp => {
-      console.log(resp);
       if (resp.error) {
         setIsError(resp.error);
       }
@@ -20,7 +19,6 @@ export default function RaffleDisplayWinner({ raffle }) {
       setIsloading(false);
     })
   }, [raffle]);
-  console.log(raffle)
   ///////////////////////////////////////////////
   const render = () => {
     if (isError !== "") {
@@ -29,7 +27,7 @@ export default function RaffleDisplayWinner({ raffle }) {
       if (isLoading) {
         return <div><i className="fa fa-spinner fa-spin fa-3x fa-fw"></i><span className="sr-only">Loading...</span></div>
       } else {
-        return winner.map(el => <Winner raffle={raffle} winner={el} />)
+        return winner.map((el, idx) => <Winner raffle={raffle} winner={el} key={"Winner_" + idx} />)
       }
     }
   }

@@ -20,17 +20,15 @@ export default function Winner({ raffle, winner }) {
           </figure>
         </div>
         <div className="media-content">
-          <p className="title is-4">John Smith</p>
-          <p className="subtitle is-6">@johnsmith</p>
+          <p className="title is-4">{winner.firstname} {winner.lastname}</p>
+          <p className="subtitle is-6">{winner.email}</p>
         </div>
       </div>
 
       <div className="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-        iaculis mauris. <a href="#top">@bulmaio</a>. <a href="#top">#css</a>
-        <a href="#top">#responsive</a>
+        <p>{winner.phone}</p>
         <br />
-        <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <time dateTime="2016-1-1">{(new Date(raffle.update_at)).toUTCString()}</time>
       </div>
     </div>
   </div>
