@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import RaffleRegisterParticipants from "../compoents/raffleRegisterParticipants.js";
 import RaffleShowParticipants from "../compoents/raffleShowParticipants.js";
 import RafflePickWinner from "../compoents/rafflePickWinner.js";
+import RaffleDisplayWinner from "../compoents/raffleDisplayWinner.js";
 ///////////////////////////////////////////////
 export default function RaffleDetailPage() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function RaffleDetailPage() {
   useEffect(() => {
     setIsloading(true);
     srv.getRaffleById(id, resp => {
-
+      console.log(resp);
       if (resp.error) {
         setIsError(resp.error);
         setRaffle({});
@@ -43,6 +44,9 @@ export default function RaffleDetailPage() {
         break;
       case "pickWinner":
         setTab(<RafflePickWinner raffle={raffle} />);
+        break;
+      case "displayWinner":
+        setTab(<RaffleDisplayWinner raffle={raffle} />);
         break;
       default:
         setTab(<RaffleRegisterParticipants raffle={raffle} />);
@@ -74,15 +78,17 @@ export default function RaffleDetailPage() {
               {raffle.id === undefined ? <div>Error not raffle found.</div> : <>
                 <li className="is-active"><a href="#top" targetname="register">Register</a></li>
                 <li><a href="#top" targetname="participants">Participants</a></li>
-                <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>
+                {raffle.status === 0 ?
+                  <li><a href="#top" targetname="pickWinner">Pick Winner</a></li>
+                  :
+                  <li><a href="#top" targetname="displayWinner">Winner</a></li>
+                }
               </>
               }
             </ul>
           </div>
 
-          <div>
-            {tab}
-          </div>
+          <div>{tab}</div>
         </div>
       }
     }

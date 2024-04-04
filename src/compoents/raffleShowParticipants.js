@@ -41,7 +41,7 @@ export default function RaffleShowParticipants({ raffle }) {
           <span className="sr-only">Loading...</span>
         </div>
       } else {
-        return filterParticipant(filterInputValue, participants).map(el => <Participant participant={el} />);
+        return filterParticipant(filterInputValue, participants).map((el, idx) => <Participant participant={el} key={"participants_" + idx} />);
       }
     }
   }
