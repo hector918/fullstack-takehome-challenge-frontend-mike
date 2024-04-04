@@ -16,7 +16,6 @@ export default function RafflePickWinner({ raffle }) {
 
       }
       setIsloading(false);
-
     })
   }
   ///////////////////////////////////////////////
@@ -54,7 +53,7 @@ export default function RafflePickWinner({ raffle }) {
           </button>
         </div>
       </div></div>
-      <div class="content">
+      <div className="content">
         {helperRender()}
       </div>
     </div>

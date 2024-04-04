@@ -80,6 +80,10 @@ const pickAWinner = (raffleId, secretToken, callback) => {
   const body = { body: JSON.stringify({ secret_token: secretToken }) };
   fetch_put(`${API}/api/raffles/${raffleId}/winner`, body, callback);
 }
+
+const getRaffleWinner = (raffleId, callback) => {
+  fetch_get(`${API}/api/raffles/${raffleId}/winner`, callback);
+}
 /////////////////////////////////////////////////
 const exp = {
   getAllRaffles,
@@ -87,6 +91,7 @@ const exp = {
   getRaffleById,
   raffleRegisterParticipant,
   getRaffleParticipants,
-  pickAWinner
+  pickAWinner,
+  getRaffleWinner
 };
 export default exp;
